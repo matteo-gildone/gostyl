@@ -1,4 +1,4 @@
-package styles
+package gostyl
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ type Gostyl struct {
 	noColor bool
 }
 
-// NewStyle creates a new style with auto-detect colour support
+// NewStyle creates a new style with auto-detect color support
 // Color is disabled if NO_COLOR env var is set or if TERM "dumb" or empty
 func NewStyle() Gostyl {
 	return Gostyl{
@@ -148,82 +148,82 @@ func (g Gostyl) BrightWhite() Gostyl {
 
 // Background colors
 
-// BgBlack returns a style with background black text
+// BgBlack returns a style with black background
 func (g Gostyl) BgBlack() Gostyl {
 	return g.addCode("40")
 }
 
-// BgRed returns a style with red text
+// BgRed returns a style with background red background
 func (g Gostyl) BgRed() Gostyl {
 	return g.addCode("41")
 }
 
-// BgGreen returns a style with green text
+// BgGreen returns a style with background green background
 func (g Gostyl) BgGreen() Gostyl {
 	return g.addCode("42")
 }
 
-// BgYellow returns a style with yellow text
+// BgYellow returns a style with yellow background
 func (g Gostyl) BgYellow() Gostyl {
 	return g.addCode("43")
 }
 
-// BgBlue returns a style with blue text
+// BgBlue returns a style with blue background
 func (g Gostyl) BgBlue() Gostyl {
 	return g.addCode("44")
 }
 
-// BgMagenta returns a style with magenta text
+// BgMagenta returns a style with magenta background
 func (g Gostyl) BgMagenta() Gostyl {
 	return g.addCode("45")
 }
 
-// BgCyan returns a style with cyan text
+// BgCyan returns a style with cyan background
 func (g Gostyl) BgCyan() Gostyl {
 	return g.addCode("46")
 }
 
-// BgWhite returns a style with white text
+// BgWhite returns a style with white background
 func (g Gostyl) BgWhite() Gostyl {
 	return g.addCode("47")
 }
 
-// BgBrightBlack returns a style with bright black text
+// BgBrightBlack returns a style with bright black background
 func (g Gostyl) BgBrightBlack() Gostyl {
 	return g.addCode("100")
 }
 
-// BgBrightRed returns a style with bright red text
+// BgBrightRed returns a style with bright red background
 func (g Gostyl) BgBrightRed() Gostyl {
 	return g.addCode("101")
 }
 
-// BgBrightGreen returns a style with bright green text
+// BgBrightGreen returns a style with bright green background
 func (g Gostyl) BgBrightGreen() Gostyl {
 	return g.addCode("102")
 }
 
-// BgBrightYellow returns a style with bright yellow text
+// BgBrightYellow returns a style with bright yellow background
 func (g Gostyl) BgBrightYellow() Gostyl {
 	return g.addCode("103")
 }
 
-// BgBrightBlue returns a style with bright blue text
+// BgBrightBlue returns a style with bright blue background
 func (g Gostyl) BgBrightBlue() Gostyl {
 	return g.addCode("104")
 }
 
-// BgBrightMagenta returns a style with bright magenta text
+// BgBrightMagenta returns a style with bright magenta background
 func (g Gostyl) BgBrightMagenta() Gostyl {
 	return g.addCode("105")
 }
 
-// BgBrightCyan returns a style with  bright cyan text
+// BgBrightCyan returns a style with  bright cyan background
 func (g Gostyl) BgBrightCyan() Gostyl {
 	return g.addCode("106")
 }
 
-// BgBrightWhite returns a style with bright white text
+// BgBrightWhite returns a style with bright white background
 func (g Gostyl) BgBrightWhite() Gostyl {
 	return g.addCode("107")
 }
