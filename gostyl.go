@@ -143,7 +143,7 @@ func (g Gostyl) BrightMagenta() Gostyl {
 	return g.addCode("95")
 }
 
-// BrightCyan returns a style with  bright cyan text
+// BrightCyan returns a style with bright cyan text
 func (g Gostyl) BrightCyan() Gostyl {
 	return g.addCode("96")
 }
@@ -160,12 +160,12 @@ func (g Gostyl) BgBlack() Gostyl {
 	return g.addCode("40")
 }
 
-// BgRed returns a style with background red background
+// BgRed returns a style with red background
 func (g Gostyl) BgRed() Gostyl {
 	return g.addCode("41")
 }
 
-// BgGreen returns a style with background green background
+// BgGreen returns a style with green background
 func (g Gostyl) BgGreen() Gostyl {
 	return g.addCode("42")
 }
@@ -225,7 +225,7 @@ func (g Gostyl) BgBrightMagenta() Gostyl {
 	return g.addCode("105")
 }
 
-// BgBrightCyan returns a style with  bright cyan background
+// BgBrightCyan returns a style with bright cyan background
 func (g Gostyl) BgBrightCyan() Gostyl {
 	return g.addCode("106")
 }
