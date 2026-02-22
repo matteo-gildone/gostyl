@@ -45,6 +45,39 @@ func TestStyle_NewNoColor(t *testing.T) {
 	}
 }
 
+func TestStyle_NoColorRendering(t *testing.T) {
+	t.Setenv("NO_COLOR", "1")
+	tests := []struct {
+		name  string
+		style Gostyl
+		input string
+		want  string
+	}{
+		{
+			name:  "bold style stripped",
+			input: "bold style",
+			style: NewStyle().Bold(),
+			want:  "bold style",
+		},
+		{
+			name:  "chained styles stripped",
+			input: "chained styles",
+			style: NewStyle().Bold().BgBrightCyan(),
+			want:  "chained styles",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.style.Sprint(tt.input)
+
+			if got != tt.want {
+				t.Errorf("got %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestStyles_Sprint(t *testing.T) {
 	tests := []struct {
 		name  string
