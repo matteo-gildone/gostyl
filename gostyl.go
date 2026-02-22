@@ -24,6 +24,13 @@ func NewStyle() Gostyl {
 
 // addCode return a new Gostyl with an additional ANSI code
 func (g Gostyl) addCode(code string) Gostyl {
+	// Return unchanged if code already applied to avoid duplicate ANSI codes
+	for _, c := range g.codes {
+		if c == code {
+			return g
+		}
+	}
+
 	codes := append([]string(nil), g.codes...)
 	codes = append(codes, code)
 	return Gostyl{

@@ -10,6 +10,41 @@ func TestStyles_New(t *testing.T) {
 	}
 }
 
+func TestStyle_NewNoColor(t *testing.T) {
+	tests := []struct {
+		name  string
+		setup func(t *testing.T)
+		want  bool
+	}{
+		{
+			name:  "NO_COLOR set",
+			setup: func(t *testing.T) { t.Setenv("NO_COLOR", "1") },
+			want:  true,
+		},
+		{
+			name:  "TERM is dumb",
+			setup: func(t *testing.T) { t.Setenv("TERM", "dumb") },
+			want:  true,
+		},
+		{
+			name:  "TERM is empty",
+			setup: func(t *testing.T) { t.Setenv("TERM", "") },
+			want:  true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.setup(t)
+			got := NewStyle()
+
+			if got.noColor != tt.want {
+				t.Errorf("got %v, want %v", got.noColor, tt.want)
+			}
+		})
+	}
+}
+
 func TestStyles_Sprint(t *testing.T) {
 	tests := []struct {
 		name  string
@@ -267,28 +302,31 @@ func TestStyles_Sprint(t *testing.T) {
 
 func TestStyles_Sprintf(t *testing.T) {
 	tests := []struct {
-		name  string
-		style Gostyl
-		input string
-		want  string
+		name   string
+		style  Gostyl
+		format string
+		input  string
+		want   string
 	}{
 		{
-			name:  "base style",
-			style: NewStyle(),
-			input: "base style",
-			want:  "base style with format",
+			name:   "base style",
+			style:  NewStyle(),
+			input:  "base style with format",
+			format: "%s",
+			want:   "base style with format",
 		},
 		{
-			name:  "bold style",
-			input: "bold style",
-			style: NewStyle().Bold(),
-			want:  "\033[1mbold style with format\033[0m",
+			name:   "bold style",
+			input:  "bold style with format",
+			format: "%s",
+			style:  NewStyle().Bold(),
+			want:   "\033[1mbold style with format\033[0m",
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := tt.style.Sprintf("%s %s", tt.input, "with format")
+			got := tt.style.Sprintf(tt.format, tt.input)
 
 			if got != tt.want {
 				t.Errorf("got %q, want %q", got, tt.want)
@@ -333,11 +371,10 @@ func TestStyles_Sprintln(t *testing.T) {
 
 func TestStyleChaining(t *testing.T) {
 	tests := []struct {
-		name    string
-		style   Gostyl
-		input   string
-		noColor bool
-		want    string
+		name  string
+		style Gostyl
+		input string
+		want  string
 	}{
 		{
 			name:  "base style unchanged",
@@ -354,6 +391,12 @@ func TestStyleChaining(t *testing.T) {
 		{
 			name:  "multiple styles independent",
 			style: NewStyle().Red().Bold(),
+			input: "text",
+			want:  "\033[31;1mtext\033[0m",
+		},
+		{
+			name:  "multiple styles duplicated",
+			style: NewStyle().Red().Bold().Red().Bold(),
 			input: "text",
 			want:  "\033[31;1mtext\033[0m",
 		},
