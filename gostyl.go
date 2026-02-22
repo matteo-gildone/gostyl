@@ -54,14 +54,14 @@ func (g Gostyl) Underline() Gostyl {
 	return g.addCode("4")
 }
 
+// Inverse returns a style with inverse text
+func (g Gostyl) Inverse() Gostyl {
+	return g.addCode("7")
+}
+
 // Strikethrough returns a style with strikethrough text
 func (g Gostyl) Strikethrough() Gostyl {
 	return g.addCode("9")
-}
-
-// Inverse returns a style with strikethrough text
-func (g Gostyl) Inverse() Gostyl {
-	return g.addCode("7")
 }
 
 // Foreground colors
@@ -259,5 +259,5 @@ func (g Gostyl) Sprintf(format string, a ...any) string {
 }
 
 func (g Gostyl) Sprintln(a ...any) string {
-	return g.apply(fmt.Sprintln(a...))
+	return g.apply(fmt.Sprint(a...)) + "\n"
 }
