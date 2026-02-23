@@ -2,7 +2,7 @@
 
 A tiny, focused styling helper for Go.
 
-## Feature
+## Features
 
 - 🎨Chain styles: `.Red().Bold().Underline()`
 - 🔇Auto-respects `NO_COLOR` environment variable
@@ -39,12 +39,22 @@ func main() {
 ```go
 
 gostyl.Success("task done")
+gostyl.Successf("%d: %s", 1, "task done")
+gostyl.Successln("task done")
 
 gostyl.Warning("check this")
+gostyl.Warningf("%s", "check this")
+gostyl.Warningln("check this")
 
 gostyl.Danger("something failed")
+gostyl.Dangerf("%s", "something failed")
+gostyl.Dangerln("something failed")
 
 gostyl.Info("something to notice")
+gostyl.Infof("%s", "something to notice")
+gostyl.Infoln("something to notice")
 
 gostyl.Muted("something not really important")
+gostyl.Mutedf("%s", "something not really important")
+gostyl.Mutedln("something not really important")
 ```
