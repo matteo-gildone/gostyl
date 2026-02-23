@@ -33,3 +33,18 @@ func main() {
     fmt.Println(warning.Sprint("Warning!"))
 }
 ```
+
+## Presets
+
+```go
+
+gostyl.Success("task done")
+
+gostyl.Warning("check this")
+
+gostyl.Danger("something failed")
+
+gostyl.Info("something to notice")
+
+gostyl.Muted("something not really important")
+```

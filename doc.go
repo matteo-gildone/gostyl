@@ -6,5 +6,5 @@
 //
 //	s := gostyl.NewStyle()
 //	fmt.Println(s.Bold().Red().Sprint("error"))
-//	fmt.Println(gostyl.Danger().Sprint("something went wrong"))
+//	fmt.Println(gostyl.Danger("something went wrong"))
 package gostyl
