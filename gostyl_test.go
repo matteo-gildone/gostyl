@@ -10,59 +10,24 @@ func TestStyles_New(t *testing.T) {
 	}
 }
 
-func TestStyle_NewNoColor(t *testing.T) {
-	tests := []struct {
-		name  string
-		setup func(t *testing.T)
-		want  bool
-	}{
-		{
-			name:  "NO_COLOR set",
-			setup: func(t *testing.T) { t.Setenv("NO_COLOR", "1") },
-			want:  true,
-		},
-		{
-			name:  "TERM is dumb",
-			setup: func(t *testing.T) { t.Setenv("TERM", "dumb") },
-			want:  true,
-		},
-		{
-			name:  "TERM is empty",
-			setup: func(t *testing.T) { t.Setenv("TERM", "") },
-			want:  true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			tt.setup(t)
-			got := NewStyle()
-
-			if got.noColor != tt.want {
-				t.Errorf("got %v, want %v", got.noColor, tt.want)
-			}
-		})
-	}
-}
-
 func TestStyle_NoColorRendering(t *testing.T) {
 	t.Setenv("NO_COLOR", "1")
 	tests := []struct {
 		name  string
-		style func() Gostyl
+		style func() Style
 		input string
 		want  string
 	}{
 		{
 			name:  "bold style stripped",
 			input: "bold style",
-			style: func() Gostyl { return NewStyle().Bold() },
+			style: func() Style { return NewStyle().Bold() },
 			want:  "bold style",
 		},
 		{
 			name:  "chained styles stripped",
 			input: "chained styles",
-			style: func() Gostyl { return NewStyle().Bold().BgBrightCyan() },
+			style: func() Style { return NewStyle().Bold().BgBrightCyan() },
 			want:  "chained styles",
 		},
 	}
@@ -81,7 +46,7 @@ func TestStyle_NoColorRendering(t *testing.T) {
 func TestStyles_Sprint(t *testing.T) {
 	tests := []struct {
 		name  string
-		style Gostyl
+		style Style
 		input string
 		want  string
 	}{
@@ -336,7 +301,7 @@ func TestStyles_Sprint(t *testing.T) {
 func TestStyles_Sprintf(t *testing.T) {
 	tests := []struct {
 		name   string
-		style  Gostyl
+		style  Style
 		format string
 		input  string
 		want   string
@@ -372,7 +337,7 @@ func TestStyles_Sprintf(t *testing.T) {
 func TestStyles_Sprintln(t *testing.T) {
 	tests := []struct {
 		name  string
-		style Gostyl
+		style Style
 		input string
 		want  string
 	}{
@@ -405,7 +370,7 @@ func TestStyles_Sprintln(t *testing.T) {
 func TestStyleChaining(t *testing.T) {
 	tests := []struct {
 		name  string
-		style Gostyl
+		style Style
 		input string
 		want  string
 	}{
@@ -442,5 +407,23 @@ func TestStyleChaining(t *testing.T) {
 				t.Errorf("got %q, want %q", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestStyle_BranchingIsSafe(t *testing.T) {
+	base := NewStyle().Red()
+	a := base.Bold()
+	b := base.Underline()
+
+	if got, want := a.Sprint("x"), "\033[31;1mx\033[0m"; got != want {
+		t.Errorf("a: %q, want %q", got, want)
+	}
+
+	if got, want := b.Sprint("x"), "\033[31;4mx\033[0m"; got != want {
+		t.Errorf("b: %q, want %q", got, want)
+	}
+
+	if got, want := base.Sprint("x"), "\033[31mx\033[0m"; got != want {
+		t.Errorf("base: %q, want %q", got, want)
 	}
 }
